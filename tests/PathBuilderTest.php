@@ -6,12 +6,28 @@ use PHPUnit\Framework\TestCase;
 
 class PathBuilderTest extends TestCase
 {
+  public function testCustom()
+  {
+    $this->assertEquals('abc', Path::custom('/', ['abc']));
+    $this->assertEquals('abc', Path::custom('/', ['', 'abc']));
+    $this->assertEquals('abc/d', Path::custom('/', ['abc', 'd']));
+    $this->assertEquals('/abc', Path::custom('/', ['/abc']));
+    $this->assertEquals('/abc/d', Path::custom('/', ['/abc', '', 'd']));
+    $this->assertEquals('/abc/d', Path::custom('/', ['/abc', '/d']));
+    $this->assertEquals('/abc/d/e/', Path::custom('/', ['/abc', '/d', 'e/']));
+    $this->assertEquals('/abc/d/e/f', Path::custom('/', ['/abc', '/d', 'e/', 'f']));
+    $this->assertEquals('abc/d//e/f', Path::custom('/', ['abc', '/d//e/', 'f']));
+    $this->assertEquals('//cdn.xyz.com/images', Path::custom('/', ['//cdn.xyz.com', 'images']));
+  }
+
   public function testUrl()
   {
     $this->assertEquals('', Path::url(''));
     $this->assertEquals('abc', Path::url('abc'));
     $this->assertEquals('/', Path::url('/', ''));
+    $this->assertEquals('/test', Path::url('/', 'test'));
     $this->assertEquals('/test', Path::url('/', '/test'));
+    $this->assertEquals('/test', Path::url('', '/', '/test'));
     $this->assertEquals('/c/4/ab', Path::url('/', 'c', 4, 'ab'));
     $this->assertEquals('/c/0/ab', Path::url('/', 'c', 0, 'ab'));
     $this->assertEquals('/c/ab', Path::url('/', 'c', null, '', 'ab'));
