@@ -1,8 +1,6 @@
 <?php
 namespace JDI\Helper;
 
-use function implode;
-
 class PathBuilder
 {
   /**
@@ -15,7 +13,7 @@ class PathBuilder
    */
   public static function custom($separator, array $pathComponents)
   {
-    return implode($separator, $pathComponents);
+
   }
 
   /**

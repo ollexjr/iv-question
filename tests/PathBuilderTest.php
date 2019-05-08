@@ -6,6 +6,21 @@ use PHPUnit\Framework\TestCase;
 
 class PathBuilderTest extends TestCase
 {
+  public function testUrl()
+  {
+    $this->assertEquals('', PathBuilder::url(''));
+    $this->assertEquals('abc', PathBuilder::url('abc'));
+    $this->assertEquals('/', PathBuilder::url('/', ''));
+    $this->assertEquals('/test', PathBuilder::url('/', '/test'));
+    $this->assertEquals('/c/4/ab', PathBuilder::url('/', 'c', 4, 'ab'));
+    $this->assertEquals('/test', PathBuilder::url('/', '', '/test', ''));
+    $this->assertEquals('//cdn.domain.tld/test', PathBuilder::url('//cdn.domain.tld', '', '/test', ''));
+    $this->assertEquals('/test/subdir/test/', PathBuilder::url('/test/', '/subdir/test/'));
+    $this->assertEquals('/test/subdir/test/', PathBuilder::url('/test', '/subdir/test', '/'));
+    $this->assertEquals('test/subdir/test/', PathBuilder::url('test', '/subdir/test/'));
+    $this->assertEquals('test/subdir//test/', PathBuilder::url('test', '/subdir//test/'));
+  }
+
   public function testBuildPathBuilder()
   {
     $this->assertEquals("a" . DIRECTORY_SEPARATOR . "b", PathBuilder::system("a", "b"));
@@ -46,17 +61,5 @@ class PathBuilderTest extends TestCase
       ['C:\\Program Files\\Test Dir\\file6', 'file6'],
       ['C:\\test\\dir2/file7', 'file7'],
     ];
-  }
-
-  public function testUrl()
-  {
-    $this->assertEquals('abc', PathBuilder::url('abc'));
-    $this->assertEquals('/', PathBuilder::url('/', ''));
-    $this->assertEquals('/test', PathBuilder::url('/', '/test'));
-    $this->assertEquals('/c/4/ab', PathBuilder::url('/', 'c', 4, 'ab'));
-    $this->assertEquals('/test', PathBuilder::url('/', '', '/test', ''));
-    $this->assertEquals('/test/subdir/test/', PathBuilder::url('/test', '/subdir/test/'));
-    $this->assertEquals('/test/subdir/test/', PathBuilder::url('/test', '/subdir/test', '/'));
-    $this->assertEquals('test/subdir/test/', PathBuilder::url('test', '/subdir/test/'));
   }
 }
