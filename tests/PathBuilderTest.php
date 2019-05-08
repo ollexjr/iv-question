@@ -1,51 +1,55 @@
 <?php
 namespace JDI\Tests;
 
-use JDI\Helper\PathBuilder;
+use JDI\Helper\PathBuilder as Path;
 use PHPUnit\Framework\TestCase;
 
 class PathBuilderTest extends TestCase
 {
   public function testUrl()
   {
-    $this->assertEquals('', PathBuilder::url(''));
-    $this->assertEquals('abc', PathBuilder::url('abc'));
-    $this->assertEquals('/', PathBuilder::url('/', ''));
-    $this->assertEquals('/test', PathBuilder::url('/', '/test'));
-    $this->assertEquals('/c/4/ab', PathBuilder::url('/', 'c', 4, 'ab'));
-    $this->assertEquals('/test', PathBuilder::url('/', '', '/test', ''));
-    $this->assertEquals('//cdn.domain.tld/test', PathBuilder::url('//cdn.domain.tld', '', '/test', ''));
-    $this->assertEquals('/test/subdir/test/', PathBuilder::url('/test/', '/subdir/test/'));
-    $this->assertEquals('/test/subdir/test/', PathBuilder::url('/test', '/subdir/test', '/'));
-    $this->assertEquals('test/subdir/test/', PathBuilder::url('test', '/subdir/test/'));
-    $this->assertEquals('test/subdir//test/', PathBuilder::url('test', '/subdir//test/'));
+    $this->assertEquals('', Path::url(''));
+    $this->assertEquals('abc', Path::url('abc'));
+    $this->assertEquals('/', Path::url('/', ''));
+    $this->assertEquals('/test', Path::url('/', '/test'));
+    $this->assertEquals('/c/4/ab', Path::url('/', 'c', 4, 'ab'));
+    $this->assertEquals('/c/0/ab', Path::url('/', 'c', 0, 'ab'));
+    $this->assertEquals('/c/ab', Path::url('/', 'c', null, '', 'ab'));
+    $this->assertEquals('/test', Path::url('/', '', '/test', ''));
+    $this->assertEquals('//cdn.domain.tld/test', Path::url('//cdn.domain.tld', '', '/test', ''));
+    $this->assertEquals('/test/subdir/test/', Path::url('/test/', '/subdir/test/'));
+    $this->assertEquals('/test/subdir/test/', Path::url('/test', '/subdir/test', '/'));
+    $this->assertEquals('test/subdir/test/', Path::url('test', '/subdir/test/'));
+    $this->assertEquals('test/subdir//test/', Path::url('test', '/subdir//test/'));
   }
 
-  public function testBuildPathBuilder()
+  public function testBuildPath()
   {
-    $this->assertEquals("a" . DIRECTORY_SEPARATOR . "b", PathBuilder::system("a", "b"));
-    $this->assertEquals("a" . DIRECTORY_SEPARATOR . "b", PathBuilder::system("a", "b"));
+    $this->assertEquals("a" . DIRECTORY_SEPARATOR . "b", Path::system("a", "b"));
+    $this->assertEquals("a" . DIRECTORY_SEPARATOR . "b", Path::system("a", "b"));
   }
 
-  public function testBuildWindowsPathBuilder()
+  public function testBuildWindowsPath()
   {
-    $this->assertEquals("a\\b", PathBuilder::windows("a", "b"));
+    $this->assertEquals("a\\b", Path::windows("a", "b"));
   }
 
-  public function testBuildUnixPathBuilder()
+  public function testBuildUnixPath()
   {
-    $this->assertEquals("a/b", PathBuilder::unix("a", "b"));
+    $this->assertEquals("a/b", Path::unix("a", "b"));
   }
 
-  public function testBuildUrlPathBuilder()
+  public function testBuildUrlPath()
   {
-    $this->assertEquals("a/b", PathBuilder::url("a", "b"));
+    $this->assertEquals("a/b", Path::url("a", "b"));
   }
 
-  public function testBuildCustomPathBuilder()
+  public function testBuildCustomPath()
   {
-    $this->assertEquals("a|b", PathBuilder::custom("|", ["a", "b"]));
-    $this->assertEquals("a|b", PathBuilder::custom("|", [0 => "a", 1 => "b"]));
+    $this->assertEquals("a|b", Path::custom("|", ["a", "b"]));
+    $this->assertEquals("a|b|c", Path::custom("|", ["a", "|b|", "c"]));
+    $this->assertEquals("a|b", Path::custom("|", [0 => "a", 1 => "b"]));
+    $this->assertEquals("a/~~b", Path::custom("~~", [0 => "a/", 1 => "b"]));
   }
 
   public function baseNameProvider()
@@ -62,4 +66,5 @@ class PathBuilderTest extends TestCase
       ['C:\\test\\dir2/file7', 'file7'],
     ];
   }
+
 }
