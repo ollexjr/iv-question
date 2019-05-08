@@ -16,6 +16,10 @@ class PathBuilderTest extends TestCase
     $this->assertEquals('/abc/d', Path::custom('/', ['/abc', '/d']));
     $this->assertEquals('/abc/d/e/', Path::custom('/', ['/abc', '/d', 'e/']));
     $this->assertEquals('/abc/d/e/f', Path::custom('/', ['/abc', '/d', 'e/', 'f']));
+    $this->assertEquals('/abc/d/0/f', Path::custom('/', ['/abc', '/d', 0, 'f']));
+    $this->assertEquals('/abc/d/f', Path::custom('/', ['/abc', '/d', null, 'f']));
+    $this->assertEquals('/abc/d/f', Path::custom('/', ['', '/abc', '', '/d', null, 'f']));
+    $this->assertEquals('/abc/d/f/', Path::custom('/', ['', '', '/abc', null, null, '/d', null, 'f', '', '', '/']));
     $this->assertEquals('abc/d//e/f', Path::custom('/', ['abc', '/d//e/', 'f']));
     $this->assertEquals('//cdn.xyz.com/images', Path::custom('/', ['//cdn.xyz.com', 'images']));
   }
