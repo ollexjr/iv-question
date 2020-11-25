@@ -28,7 +28,7 @@ class PathBuilder
     // scan array and discard anything but strings and numeric values
     $pathComponents =  array_values(array_filter($pathComponents, function($e){
       // if a string, and not an empty string, then it's valid.
-      if (is_string($e) && \strlen($e) != '') {
+      if (is_string($e) && $e != '') {
         return true;
       }
       // also allow integers

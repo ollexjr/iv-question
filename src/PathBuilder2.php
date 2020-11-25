@@ -28,7 +28,7 @@ class PathBuilder2
     $i = 0;
     $buffer = [];
     foreach ($pathComponents as $k => $v) {
-      if (is_string($v) && \strlen($v) != '') {
+      if (is_string($v) && $v != '') {
         $buffer[$i++] = $v;
         continue;
       }
