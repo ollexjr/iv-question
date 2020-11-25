@@ -2,6 +2,7 @@
 namespace JDI\Tests;
 
 use JDI\Helper\PathBuilder as Path;
+
 use PHPUnit\Framework\TestCase;
 
 class PathBuilderTest extends TestCase
@@ -86,5 +87,4 @@ class PathBuilderTest extends TestCase
       ['C:\\test\\dir2/file7', 'file7'],
     ];
   }
-
 }

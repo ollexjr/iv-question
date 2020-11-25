@@ -1,6 +1,7 @@
 <?php
 
-use JDI\Helper\PathBuilder;
+//use JDI\Helper\PathBuilder;
+use JDI\Helper\PathBuilder2 as PathBuilder;
 
 require 'vendor/autoload.php';
 

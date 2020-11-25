@@ -18,3 +18,10 @@
   ['/abc','/d',null, 'f'] => /abc/d/f
   ['abc','/d//e/','f'] => abc/d//e/f
   ['//cdn.xyz.com','images'] => //cdn.xyz.com/images
+
+
+BUMP:
+
+Completed PathBuilder.php, 
+PathBuilder2.php - uses different array filtering
+
